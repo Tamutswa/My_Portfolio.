@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamutswa Matondo - Resume</title>
+  <!-- Include jsPDF and html2canvas libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #2e7d32;
+      --primary-light: rgba(46, 125, 50, 0.1);
+      --primary-dark: #1b5e20;
+      --text-dark: #1a1a1a;
+      --text-light: #555;
+      --bg-light: #f8f8f8;
+      --bg-dark: #333;
+      --border-color: #e0e0e0;
+      --accent-color: #2e7d32;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      font-family: 'Work Sans', sans-serif;
+    }
+    
+    .resume-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Decorative elements */
+    .resume-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    }
+    
+    .corner-decoration {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background-color: var(--primary-light);
+      border-radius: 50%;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    
+    .top-right {
+      top: -75px;
+      right: -75px;
+    }
+    
+    .bottom-left {
+      bottom: -75px;
+      left: -75px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--text-dark);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background-color: var(--primary);
+    }
+    
+    .header h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      color: var(--text-light);
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    .resume-content {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .left-column {
+      flex: 6;
+    }
+    
+    .right-column {
+      flex: 4;
+      position: relative;
+    }
+    
+    .right-column::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -20px;
+      height: 100%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::before {
+      content: "//";
+      color: var(--primary);
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+    
+    .contact-info {
+      margin-bottom: 20px;
+    }
+    
+    .contact-item {
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: block;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .contact-item::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-family: 'Space Mono', monospace;
+    }
+    
+    .education-item, .experience-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+    
+    .education-item:hover, .experience-item:hover {
+      background-color: var(--primary-light);
+      border-left: 3px solid var(--primary);
+    }
+    
+    .education-item h3, .experience-item h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .education-item p, .experience-item p {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: var(--text-light);
+    }
+    
+    .experience-item ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+    
+    .experience-item li {
+      font-size: 14px;
+      margin-bottom: 5px;
+      position: relative;
+    }
+    
+    .experience-item li::marker {
+      color: var(--primary);
+    }
+    
+    .skills-list, .languages-list {
+      list-style-type: none;
+    }
+    
+    .skills-list li, .languages-list li {
+      font-size: 14px;
+      padding: 5px 0;
+      position: relative;
+      padding-left: 20px;
+      transition: transform 0.2s ease;
+    }
+    
+    .skills-list li:hover, .languages-list li:hover {
+      transform: translateX(5px);
+    }
+    
+    .skills-list li::before, .languages-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 18px;
+    }
+    
+    .action-buttons {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: var(--bg-light);
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+    
+    .button:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .button:hover::before {
+      left: 100%;
+    }
+    
+    #loading-indicator {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--primary);
+    }
+    
+    /* Responsive styles */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      .resume-container {
+        box-shadow: none;
+        padding: 20px;
+        max-width: 100%;
+      }
+      .action-buttons, .corner-decoration {
+        display: none;
+      }
+      .resume-container::before {
+        display: none;
+      }
+      .right-column::before {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .resume-content {
+        flex-direction: column;
+      }
+      .right-column::before {
+        display: none;
+      }
+      .resume-container {
+        padding: 20px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+      .header h2 {
+        font-size: 14px;
+      }
+    }
+  </style>
+  <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up the jsPDF object
+      window.jsPDF = window.jspdf.jsPDF;
+      
+      // Function to generate and download PDF
+      window.downloadPDF = function() {
+        // Show loading indicator
+        document.getElementById('loading-indicator').style.display = 'block';
+        
+        // Hide buttons during PDF generation
+        const actionButtons = document.querySelector('.action-buttons');
+        actionButtons.style.display = 'none';
+        
+        // Get the resume container
+        const resumeContainer = document.querySelector('.resume-container');
+        
+        // Set scale for better quality
+        const scale = 2;
+        
+        // Configure html2canvas
+        html2canvas(resumeContainer, {
+          scale: scale,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        }).then(canvas => {
+          // Create PDF
+          const imgData = canvas.toDataURL('image/jpeg', 1.0);
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = canvas.width;
+          const imgHeight = canvas.height;
+          const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+          const imgX = (pdfWidth - imgWidth * ratio) / 2;
+          const imgY = 0;
+          
+          pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+          pdf.save('Tamutswa_Matondo_Resume.pdf');
+          
+          // Show buttons again
+          actionButtons.style.display = 'block';
+          document.getElementById('loading-indicator').style.display = 'none';
+        });
+      };
+    });
+  </script>
+</head>
+<body>
+  <div class="resume-container" id="resume-content">
+    <!-- Decorative elements -->
+    <div class="corner-decoration top-right"></div>
+    <div class="corner-decoration bottom-left"></div>
+    
+    <div class="header">
+      <h1>TAMUTSWA MATONDO</h1>
+      <h2>WEB DEVELOPER | TECH ENTHUSIAST</h2>
+    </div>
+    
+    <div class="resume-content">
+      <div class="left-column">
+        <div class="section">
+          <h2 class="section-title">PROFILE SUMMARY</h2>
+          <p>Computer Science undergraduate at NUST with practical experience in smart tech solutions combining hardware and software. Skilled in web development, IoT, and software engineering. Seeking an industrial attachment to apply and grow in a tech-driven environment.</p>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">WORK EXPERIENCE</h2>
+          
+          <div class="experience-item">
+            <h3>Project Manager – Smart Hanger System</h3>
+            <p>National University of Science and Technology</p>
+            <p>2024</p>
+            <ul>
+              <li>Led a 4-person team to design and build a smart inventory management system integrating IoT sensors with a web-based interface.</li>
+              <li>Oversaw full project lifecycle: planning, development, testing, and presentation.</li>
+              <li>Strengthened leadership, problem-solving, and cross-functional communication skills.</li>
+            </ul>
+          </div>
+          
+          <div class="experience-item">
+            <h3>Junior Developer – Personal & Academic Projects</h3>
+            <p>Remote / National University of Science and Technology</p>
+            <p>2023 – Present</p>
+            <ul>
+              <li>Designed and deployed responsive web applications and interactive dashboards using HTML, CSS, JavaScript, and React.</li>
+              <li>Developed mini IoT prototypes using Arduino and Raspberry Pi with sensor integration and remote monitoring.</li>
+              <li>Collaborated in peer-led coding workshops and contributed to GitHub repositories focused on real-world challenges.</li>
+            </ul>
+          </div>
+          
+          <div class="experience-item">
+            <h3>Freelance Web Developer (Volunteer Projects)</h3>
+            <p>Remote</p>
+            <p>2022 – Present</p>
+            <ul>
+              <li>Designed portfolio websites and landing pages for students and small businesses using HTML, CSS, and JavaScript.</li>
+              <li>Implemented lightweight CMS solutions and forms for client data collection.</li>
+              <li>Improved communication and client-handling experience while sharpening development practices.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-column">
+        <div class="section">
+          <h2 class="section-title">CONTACT</h2>
+          <div class="contact-info">
+            <span class="contact-item">+263 71 702 9585 | +263 78 359 7194</span>
+            <span class="contact-item">tamutswamatondo04@gmail.com</span>
+            <span class="contact-item">3395/16 Mbizo Kwekwe, Midlands.</span>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">EDUCATION</h2>
+          <div class="education-item">
+            <h3>NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY</h3>
+            <p>Bachelor of Science in Computer Science</p>
+            <p>2023 - Expected Graduation: 2027</p>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">SKILLS</h2>
+          <ul class="skills-list">
+            <li>Web Development</li>
+            <li>Internet of Things (IoT)</li>
+            <li>Software Engineering</li>
+            <li>UI/UX Design</li>
+            <li>Version Control</li>
+            <li>Project Management</li>
+            <li>Team Collaboration</li>
+            <li>Problem Solving</li>
+            <li>Mobile App Development</li>
+            <li>Networking</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">LANGUAGES</h2>
+          <ul class="languages-list">
+            <li>English: Fluent</li>
+            <li>Shona: Fluent</li>
+            <li>Ndebele: Fluent</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <p>Choose an option below:</p>
+      <button onclick="downloadPDF()" class="button">Download PDF</button>
+      <button onclick="window.print()" class="button">Print Resume</button>
+    </div>
+    <div id="loading-indicator">Generating PDF... Please wait.</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamutswa Matondo - ATS Resume</title>
+  <!-- Include jsPDF and html2canvas libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    /* ATS-friendly styling - minimal, clean, and straightforward */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      color: #000000;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    .resume-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    
+    h2 {
+      font-size: 18px;
+      border-bottom: 1px solid #000;
+      padding-bottom: 5px;
+      text-transform: uppercase;
+    }
+    
+    h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    
+    p {
+      margin: 0 0 10px 0;
+    }
+    
+    .contact-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    ul {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 5px;
+    }
+    
+    .job-title, .education-degree {
+      font-weight: bold;
+    }
+    
+    .company-details, .education-details {
+      margin-bottom: 5px;
+    }
+    
+    .date {
+      font-style: italic;
+    }
+    
+    .skills-list {
+      columns: 2;
+      -webkit-columns: 2;
+      -moz-columns: 2;
+    }
+    
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #f0f0f0;
+    }
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2e7d32;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      font-size: 14px;
+    }
+    
+    .button:hover {
+      background-color: #1b5e20;
+    }
+    
+    #loading-indicator {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+      color: #2e7d32;
+    }
+    
+    .ats-note {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-left: 4px solid #2e7d32;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      .resume-container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .action-buttons, .ats-note {
+        display: none;
+      }
+    }
+  </style>
+  <script>
+    // Wait for the document to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up the jsPDF object
+      window.jsPDF = window.jspdf.jsPDF;
+      
+      // Function to generate and download PDF
+      window.downloadPDF = function() {
+        // Show loading indicator
+        document.getElementById('loading-indicator').style.display = 'block';
+        
+        // Hide buttons and note during PDF generation
+        const actionButtons = document.querySelector('.action-buttons');
+        const atsNote = document.querySelector('.ats-note');
+        actionButtons.style.display = 'none';
+        atsNote.style.display = 'none';
+        
+        // Get the resume container
+        const resumeContainer = document.querySelector('.resume-container');
+        
+        // Set scale for better quality
+        const scale = 2;
+        
+        // Configure html2canvas
+        html2canvas(resumeContainer, {
+          scale: scale,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        }).then(canvas => {
+          // Create PDF
+          const imgData = canvas.toDataURL('image/jpeg', 1.0);
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = canvas.width;
+          const imgHeight = canvas.height;
+          const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+          const imgX = (pdfWidth - imgWidth * ratio) / 2;
+          const imgY = 0;
+          
+          pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+          pdf.save('Tamutswa_Matondo_ATS_Resume.pdf');
+          
+          // Show buttons and note again
+          actionButtons.style.display = 'block';
+          atsNote.style.display = 'block';
+          document.getElementById('loading-indicator').style.display = 'none';
+        });
+      };
+    });
+  </script>
+</head>
+<body>
+  <div class="resume-container" id="resume-content">
+    <div class="ats-note">
+      <strong>ATS-Optimized Resume:</strong> This version is formatted specifically for Applicant Tracking Systems with simple formatting, standard section headings, and keyword-rich content to ensure maximum compatibility with automated resume scanners.
+    </div>
+    
+    <h1>TAMUTSWA MATONDO</h1>
+    <div class="contact-info">
+      <p>Web Developer | Tech Enthusiast</p>
+      <p>+263 71 702 9585 | +263 78 359 7194 | tamutswamatondo04@gmail.com</p>
+      <p>3395/16 Mbizo Kwekwe, Midlands, Zimbabwe</p>
+    </div>
+    
+    <div class="section">
+      <h2>PROFESSIONAL SUMMARY</h2>
+      <p>Computer Science undergraduate at NUST with practical experience in smart tech solutions combining hardware and software. Skilled in web development, IoT, and software engineering. Seeking an industrial attachment to apply and grow in a tech-driven environment.</p>
+    </div>
+    
+    <div class="section">
+      <h2>WORK EXPERIENCE</h2>
+      
+      <div class="job">
+        <p class="job-title">Project Manager – Smart Hanger System</p>
+        <p class="company-details">National University of Science and Technology</p>
+        <p class="date">2024</p>
+        <ul>
+          <li>Led a 4-person team to design and build a smart inventory management system integrating IoT sensors with a web-based interface.</li>
+          <li>Oversaw full project lifecycle: planning, development, testing, and presentation.</li>
+          <li>Strengthened leadership, problem-solving, and cross-functional communication skills.</li>
+        </ul>
+      </div>
+      
+      <div class="job">
+        <p class="job-title">Junior Developer – Personal & Academic Projects</p>
+        <p class="company-details">Remote / National University of Science and Technology</p>
+        <p class="date">2023 – Present</p>
+        <ul>
+          <li>Designed and deployed responsive web applications and interactive dashboards using HTML, CSS, JavaScript, and React.</li>
+          <li>Developed mini IoT prototypes using Arduino and Raspberry Pi with sensor integration and remote monitoring.</li>
+          <li>Collaborated in peer-led coding workshops and contributed to GitHub repositories focused on real-world challenges.</li>
+        </ul>
+      </div>
+      
+      <div class="job">
+        <p class="job-title">Freelance Web Developer (Volunteer Projects)</p>
+        <p class="company-details">Remote</p>
+        <p class="date">2022 – Present</p>
+        <ul>
+          <li>Designed portfolio websites and landing pages for students and small businesses using HTML, CSS, and JavaScript.</li>
+          <li>Implemented lightweight CMS solutions and forms for client data collection.</li>
+          <li>Improved communication and client-handling experience while sharpening development practices.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>EDUCATION</h2>
+      <div class="education">
+        <p class="education-degree">Bachelor of Science in Computer Science</p>
+        <p class="education-details">National University of Science and Technology</p>
+        <p class="date">2023 - Expected Graduation: 2027</p>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>SKILLS</h2>
+      <ul class="skills-list">
+        <li>Web Development (HTML, CSS, JavaScript)</li>
+        <li>Internet of Things (IoT)</li>
+        <li>Software Engineering</li>
+        <li>UI/UX Design</li>
+        <li>Version Control (Git, GitHub)</li>
+        <li>Project Management</li>
+        <li>Team Collaboration</li>
+        <li>Problem Solving</li>
+        <li>Mobile App Development</li>
+        <li>Networking</li>
+        <li>React.js</li>
+        <li>Arduino</li>
+        <li>Raspberry Pi</li>
+        <li>Responsive Design</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h2>LANGUAGES</h2>
+      <ul>
+        <li>English: Fluent</li>
+        <li>Shona: Fluent</li>
+        <li>Ndebele: Fluent</li>
+      </ul>
+    </div>
+    
+    <div class="action-buttons">
+      <p>Choose an option below:</p>
+      <button onclick="downloadPDF()" class="button">Download ATS-Friendly PDF</button>
+      <button onclick="window.print()" class="button">Print Resume</button>
+    </div>
+    <div id="loading-indicator">Generating PDF... Please wait.</div>
+  </div>
+</body>
+</html>
