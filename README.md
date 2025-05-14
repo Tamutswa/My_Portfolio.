@@ -1,30 +1,67 @@
-# New Project
+# 🚀 Tamutswa Matondo's Portfolio
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+> **Welcome to my world!**  
+> This is my interactive, animated portfolio built using **Next.js**, **Tailwind CSS**, and the best of modern frontend tech. 🎨✨
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/n0238013e-nustaczws-projects/v0-new-project-lzeyouz4haw)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/lZeyOuZ4hAw)
+## 🌟 Features
 
-## Overview
+- 🎬 Smooth page transitions & animations
+- 🧑‍💻 About Me, Projects, Skills, Resume, and more
+- 📱 Fully responsive & mobile-friendly
+- 🖱️ Hover effects, 3D visual cues, and scroll-based animations
+- 📄 Downloadable resume (in the Resume section)
+- 🎯 Deployed on GitHub Pages
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## 🔧 Tech Stack
 
-## Deployment
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/), PostCSS
+- **Package Manager**: [pnpm](https://pnpm.io/)
+- **TypeScript**: Static typing for better development
+- **Icons**: Lucide, Shadcn UI components
+- **Animations**: Framer Motion for buttery-smooth effects
 
-Your project is live at:
+## 🚦 Getting Started
 
-**[https://vercel.com/n0238013e-nustaczws-projects/v0-new-project-lzeyouz4haw](https://vercel.com/n0238013e-nustaczws-projects/v0-new-project-lzeyouz4haw)**
+First, clone the repository:
 
-## Build your app
+```bash
+git clone https://github.com/Tamutswa/Tamutswa_Portfolio.git
+cd Tamutswa_Portfolio
+pnpm install
 
-Continue building your app on:
+Then run the development server:
 
-**[https://v0.dev/chat/projects/lZeyOuZ4hAw](https://v0.dev/chat/projects/lZeyOuZ4hAw)**
+pnpm dev
 
-## How It Works
+Open http://localhost:3000 to view it in your browser.
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+📁 Project Structure
+
+Tamutswa_Portfolio/
+├── app/                  # Main app pages & routes
+├── components/           # Reusable UI components
+├── public/               # Static files and images
+├── styles/               # Tailwind CSS configurations
+├── hooks/, lib/          # Custom hooks & utility libs
+├── tailwind.config.ts    # Tailwind configuration
+├── next.config.mjs       # Next.js config
+├── tsconfig.json         # TypeScript config
+└── package.json          # Project metadata & scripts
+
+🧠 Inspiration
+This portfolio was inspired by a desire to blend creativity with code. It's a showcase of who I am — a developer, designer, and dreamer. 🌈
+
+📬 Contact Me
+GitHub: @Tamutswa
+
+Email: tamutswamatondo04@gmail.com
+
+📱 +263783597194 | +263717029585
+
+📄 License
+This project is open source and available under the MIT License.
+
+Thanks for visiting — give a ⭐ if you like what you see!
+
+"Building the future, one line of code at a time." 💻✨
