@@ -25,7 +25,6 @@
 
 First, clone the repository:
 
-```bash
 git clone https://github.com/Tamutswa/Tamutswa_Portfolio.git
 cd Tamutswa_Portfolio
 pnpm install
